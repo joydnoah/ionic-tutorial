@@ -11,4 +11,17 @@
   <p>
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
   </p>
+  <ion-list>
+    <div  *ngFor="let user of users">
+      <ion-item>
+        <ion-avatar item-start>
+          <img [src]="user.picture.medium">
+        </ion-avatar>
+        <h2>{{ user.name.first | uppercase }}</h2>
+        <p>
+          <button ion-button (click)="getToOtherPage(user)">Boton</button>
+        </p>
+      </ion-item>
+    </div>
+  </ion-list>
 </ion-content>
