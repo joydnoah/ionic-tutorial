@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../providers/user-service/user-service';
 import { ProfilePage } from '../pages/profile/profile'
 import { Geolocation } from '@ionic-native/geolocation';
+import { Device } from '@ionic-native/device';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserService,
-    Geolocation
+    Geolocation,
+    Device
   ]
 })
 export class AppModule {}

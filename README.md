@@ -1,3 +1,4 @@
 Ionic tutorial App
 
-To use it enter the folder and run ionic serve
+To run the app local enter the folder and run:
+ionic serve

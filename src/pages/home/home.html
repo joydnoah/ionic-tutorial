@@ -11,17 +11,44 @@
   <p>
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
   </p>
-  <ion-list>
-    <div  *ngFor="let user of users">
-      <ion-item>
-        <ion-avatar item-start>
-          <img [src]="user.picture.medium">
-        </ion-avatar>
-        <h2>{{ user.name.first | uppercase }}</h2>
-        <p>
-          <button ion-button (click)="getToOtherPage(user)">Boton</button>
-        </p>
-      </ion-item>
-    </div>
+  <div>
+    <p>
+      Operating system: {{ operating_system }}
+    </p>
+    <p>
+      Serial: {{ serial }}
+    </p>
+    <p>
+      Date: {{ date }}
+    </p>
+  </div>
+  <ion-list *ngIf="!logged_in">
+    <ion-item>
+      <ion-label color="primary" floating>E-mail</ion-label>
+      <ion-input [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+    <p>
+      <button ion-button (click)="loginRequest()">Login</button>
+    </p>
   </ion-list>
+  <div *ngIf="logged_in">
+    Bienvenido
+    <ion-list>
+      <div  *ngFor="let user of users">
+        <ion-item>
+          <ion-avatar item-start>
+            <img [src]="user.picture.medium">
+          </ion-avatar>
+          <h2>{{ user.name.first | uppercase }}</h2>
+          <p>
+            <button ion-button (click)="getToOtherPage(user)">Boton</button>
+          </p>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
 </ion-content>

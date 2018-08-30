@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service/user-service';
 import { ProfilePage } from '../profile/profile';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Platform } from 'ionic-angular';
+import { Device } from '@ionic-native/device';
 
 @Component({
   selector: 'page-home',
@@ -11,26 +13,44 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class HomePage {
 
   users: any[]=[];
+  email: string;
+  password: string;
+  logged_in: boolean=false;
+  operating_system: string='none';
+  serial: string='none';
+  date;
 
   constructor(
     public navCtrl: NavController,
     public UserService: UserService,
     public modalCtrl: ModalController,
-    public http: HttpClient
+    public http: HttpClient,
+    public plt: Platform,
+    private device: Device
   ) {}
 
-  ionViewDidLoad(){
+  loginRequest(){
     var url = 'http://localhost:1337/api/v1/entrance/login'
     this.http.put(url, {
-      'emailAddress': 'test@example.com',
-      'password': 'TykimikK1992'
+      'emailAddress': this.email,
+      'password': this.password
     },
     {
       responseType: 'text'
     }).subscribe(data => {
       console.log(data)
+      this.logged_in = true
+    },
+    (error) => {
+      console.log(error)
     })
+  }
 
+  ionViewDidLoad(){
+    this.serial = this.device.serial
+    this.operating_system = this.device.platform
+    this.date = new Date();
+    
     this.UserService.getUsers()
     .subscribe(
       (data) => { // Success
