@@ -5,6 +5,7 @@ import { ProfilePage } from '../profile/profile';
 import { HttpClient } from '@angular/common/http';
 import { Platform } from 'ionic-angular';
 import { Device } from '@ionic-native/device';
+import { BatteryStatus } from '@ionic-native/battery-status';
 
 @Component({
   selector: 'page-home',
@@ -18,7 +19,8 @@ export class HomePage {
   logged_in: boolean=false;
   operating_system: string='none';
   serial: string='none';
-  date;
+  batterylevel: any;
+  date: any;
 
   constructor(
     public navCtrl: NavController,
@@ -26,20 +28,21 @@ export class HomePage {
     public modalCtrl: ModalController,
     public http: HttpClient,
     public plt: Platform,
-    private device: Device
+    private device: Device,
+    private batteryStatus: BatteryStatus
   ) {}
 
   loginRequest(){
     var url = 'http://localhost:1337/api/v1/entrance/login'
+    var url2 = 'http://localhost:1337/api/v1/forms/new'
     this.http.put(url, {
       'emailAddress': this.email,
       'password': this.password
     },
     {
       responseType: 'text'
-    }).subscribe(data => {
+    }).subscribe((data) => {
       console.log(data)
-      this.logged_in = true
     },
     (error) => {
       console.log(error)
@@ -50,7 +53,9 @@ export class HomePage {
     this.serial = this.device.serial
     this.operating_system = this.device.platform
     this.date = new Date();
-    
+    this.batteryStatus.onChange().subscribe(status => {
+      this.batterylevel = status.level
+    });
     this.UserService.getUsers()
     .subscribe(
       (data) => { // Success

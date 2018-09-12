@@ -11,6 +11,8 @@ import { UserService } from '../providers/user-service/user-service';
 import { ProfilePage } from '../pages/profile/profile'
 import { Geolocation } from '@ionic-native/geolocation';
 import { Device } from '@ionic-native/device';
+import { BatteryStatus } from '@ionic-native/battery-status';
+import { HTTP } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { Device } from '@ionic-native/device';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserService,
     Geolocation,
-    Device
+    Device,
+    BatteryStatus,
+    HTTP
   ]
 })
 export class AppModule {}
